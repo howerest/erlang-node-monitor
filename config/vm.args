@@ -1,0 +1,3 @@
+-name erlang_node_monitor@127.0.0.1
+-setcookie erlang_node_monitor
+-heart
