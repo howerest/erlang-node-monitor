@@ -4,14 +4,12 @@ Visualize registered processes in an erlang node. This program takes a snapshot 
 
 ![UI Preview](https://github.com/howerest/erlang-node-monitor/raw/master/docs/screenshot.png)
 
-### Try it in erlang shell
+### Start now
 
-1. Start the server: `make run`
-2. Open file `priv/ui/index.html` with a browser
-
-### Compile
-
-Run `make` to create a release in `_rel` folder.
+1. Build Backend: `make` (from root folder)
+2. Start Backend: `make run` (from root folder)
+3. Build UI: `cd priv/ui; npm install; npm run build` (from root folder)
+3. Once server is running, open file `priv/ui/dist/index.html` with a browser
 
 ### Add to your application
 

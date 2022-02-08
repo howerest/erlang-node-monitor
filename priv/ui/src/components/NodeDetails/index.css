@@ -1,0 +1,10 @@
+.NodeDetails {
+  background: white;
+  position: fixed;
+  right: 0;
+  top: 64px;
+  border: 1px solid lightgray;
+  width: 20%;
+  height: calc(100vh - 40px);
+  padding: 10px;
+}
