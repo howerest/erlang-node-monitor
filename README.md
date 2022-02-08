@@ -14,7 +14,7 @@ Visualize registered processes in an erlang node. This program takes a snapshot 
 ### Add to your application
 
 1. Call `erlang_node_monitor_app:start()` where you want to start monitoring your node. When the application starts, a WebSocket server will be initialised in `ws://localhost:5000`, which is going to be used to communicate with the client.
-2. Open `file priv/ui/index.html` with a browser. When the page is loaded a fresh snapshot is going to be visualized.
+2. Open `file priv/ui/build/index.html` with a browser. When the page is loaded a fresh snapshot is going to be visualized.
 
 #### Features
 ```
