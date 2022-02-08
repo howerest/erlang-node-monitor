@@ -1,0 +1,24 @@
+body {
+  margin: 0;
+  font-family: monospace;
+  background: #efefef;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: monospace;
+  background: #efefef;
+}
+
+h2 { margin: 0 }
+h4 { margin: 0 }
+
+pre {
+  padding: 5px;
+  margin: 5px;
+}
+
+*:focus {
+  outline: 0 !important;
+}

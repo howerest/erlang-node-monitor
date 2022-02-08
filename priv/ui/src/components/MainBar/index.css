@@ -1,0 +1,9 @@
+.MainBar {
+  background: white;
+  z-index: 10;
+  position: fixed;
+  width: 100%;
+  box-shadow: 0px -2px 7px rgb(0 0 0 / 30%);
+  padding: 12px;
+  height: 40px;
+}
