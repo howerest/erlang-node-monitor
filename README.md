@@ -9,7 +9,7 @@ Visualize registered processes in an erlang node. This program takes a snapshot 
 1. Build Backend: `make` (from root folder)
 2. Start Backend: `make run` (from root folder)
 3. Build UI: `cd priv/ui; npm install; npm run build` (from root folder)
-3. Once server is running, open file `priv/ui/dist/index.html` with a browser
+3. Once server is running, open file `priv/ui/build/index.html` with a browser
 
 ### Add to your application
 
