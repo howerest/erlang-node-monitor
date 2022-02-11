@@ -15,6 +15,10 @@ export default function(props: IProps) {
   const network = useRef(null);
 
   useEffect(() => {
+    network.current !== null && (network.current as any).redraw();
+  }, [state.lastMessageAtNode])
+
+  useEffect(() => {
     if (network.current === null) {
       network.current = new VisNetwork(
         domNode.current as any,

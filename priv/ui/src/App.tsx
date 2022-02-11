@@ -57,7 +57,8 @@ function App() {
           color:       isSupervisor ? "white" : "black",
           background:  isSupervisor ? "red" : "green",
         },
-        links:         node.links.map((l:Array<string>) => l.join('.'))
+        links:         node.links.map((l:Array<string>) => l.join('.')),
+        messages:      {}
       });
 
       // add an edge for each node link
@@ -102,12 +103,26 @@ function App() {
   function handleOnMessage(evt:any) {
     try {
       const payload = JSON.parse(evt.data);
-      dispatch({
-        type: "SET_ERLANG_NODE_NAME",
-        payload: payload.node
-      });
-      for (let i = 0; i < payload.processes.length; i++) {
-        addNewProcess(payload.processes[i]);
+      switch(payload.type) {
+        case "greet_back":
+          dispatch({
+            type: "SET_ERLANG_NODE_NAME",
+            payload: payload.node
+          });
+          for (let i = 0; i < payload.processes.length; i++) {
+            addNewProcess(payload.processes[i]);
+          }
+          break;
+        case "msg_received":
+          dispatch({
+            type: "ADD_MESSAGE",
+            payload: {
+              sourceProcessId: payload.from.join("."),
+              datetime: payload.datetime,
+              message: payload.msg
+            }
+          });
+          break;
       }
     } catch(e) {
       console.log('err', e);
