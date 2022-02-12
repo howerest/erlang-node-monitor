@@ -17,13 +17,15 @@ export interface IMessagesHistory {
   [key: string]:            {[key: string]:     Array<string>};
 }
 
-// NOTE: IMessagesHistory sample
-// const sampleMessageHistory:IMessagesHistory = {
+// {
 //   "0,10,0": {
-//     "0.12.0": {
-//       "2022-10-05 14:30": [],
-//       "2022-10-05 14:31": []
-//     }
+//     "2022-10-05 14:30": [
+//       "first message",
+//       "second message"
+//     ],
+//     "2022-10-05 14:31": [
+//       "third message"
+//     ]
 //   }
 // }
 
@@ -42,10 +44,19 @@ export interface IEdge {
   to: string;
 }
 
+interface IMessageFilters {
+  sentFromAnyOfProcessIds: null|Array<string>;
+  receivedAtAnyOfProcessIds: null|Array<string>;
+}
+
 export interface IAppState {
   name: string;
   nodes: VisDataSet<INode>;
   edges: VisDataSet<IEdge>;
+  filters: {
+    processes: {},
+    messages: IMessageFilters
+  },
   messagesSent: IMessagesHistory;
   messagesReceived: IMessagesHistory;
   nodeContent: string;
@@ -56,6 +67,13 @@ const initialState:IAppState = {
   name: 'NOT_CONNECTED!',
   nodes: new VisDataSet(),
   edges: new VisDataSet(),
+  filters: {
+    processes: {},
+    messages: {
+      sentFromAnyOfProcessIds: null,
+      receivedAtAnyOfProcessIds: null
+    }
+  },
   messagesSent: {},
   messagesReceived: {},
   nodeContent: '',
