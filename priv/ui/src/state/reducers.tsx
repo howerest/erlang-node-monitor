@@ -1,5 +1,4 @@
-import {DataSet as VisDataSet} from "vis-data";
-import initialState, { IAppState, INode, IMessageSent, IMessageReceived } from './initial_state';
+import initialState, { IAppState, IMessageSent, IMessageReceived } from './initial_state';
 import {
   SET_ERLANG_NODE_NAME,
   SET_NODE_CONTENT,
