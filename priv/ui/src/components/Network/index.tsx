@@ -2,17 +2,14 @@ import react, {useRef, useEffect} from "react"
 import {Network as VisNetwork} from "vis-network";
 import {opts} from "./options";
 import "./index.css";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { IAppState } from '../../state/initial_state';
 
-interface IProps {
-  handleSelect: Function;
-}
-
-export default function(props: IProps) {
+export default function(props:{}) {
   const state = useSelector((state:IAppState) => state);
   const domNode = useRef(null);
   const network = useRef(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     network.current !== null && (network.current as any).redraw();
@@ -29,11 +26,11 @@ export default function(props: IProps) {
         opts as any
       ) as any;
 
-      (network.current as any).on("click", props.handleSelect);
+      (network.current as any).on("click", handleSelect);
     }
 
     return () => {
-      (network.current as any).off("click", props.handleSelect);
+      (network.current as any).off("click", handleSelect);
       network.current = null;
     }
   }, [
@@ -42,6 +39,16 @@ export default function(props: IProps) {
       state.nodes,
       state.edges
   ]);
+
+  function handleSelect(params:any) {
+    if (params.nodes.length > 0) {
+      const nodeData = state.nodes.get(params.nodes[0]);
+      dispatch({
+        type: "SET_NODE_CONTENT",
+        payload: JSON.stringify(nodeData, undefined, 3)
+      });
+    }
+  }
 
   return (
     <div className="Network">
