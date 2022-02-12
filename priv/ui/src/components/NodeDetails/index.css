@@ -7,4 +7,5 @@
   width: 20%;
   height: calc(100vh - 40px);
   padding: 10px;
+  overflow: scroll;
 }
