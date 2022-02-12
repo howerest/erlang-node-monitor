@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {MainBar, Network, NodeDetails} from "./components"
+import {MainBar, Network, NodeDetails, Messages} from "./components"
 import {DataSet as VisDataSet} from "vis-data";
 import {IEdge} from "./state/initial_state";
 import './App.css';
@@ -84,30 +84,41 @@ function App() {
   }
 
   /**
-   * Handles a node selection
-   */
-  function handleSelect(params:any) {
-    if (params.nodes.length > 0) {
-      const nodeData = state.nodes.get(params.nodes[0]);
-      dispatch({
-        type: "SET_NODE_CONTENT",
-        payload: JSON.stringify(nodeData, undefined, 3)
-      });
-    }
-  };
-
-  /**
-   * Handles a new received message
+   * Handles a new received message from erlang node websocket server
    */
   function handleOnMessage(evt:any) {
     try {
       const payload = JSON.parse(evt.data);
-      dispatch({
-        type: "SET_ERLANG_NODE_NAME",
-        payload: payload.node
-      });
-      for (let i = 0; i < payload.processes.length; i++) {
-        addNewProcess(payload.processes[i]);
+      switch(payload.type) {
+        case "greet_back":
+          dispatch({
+            type: "SET_ERLANG_NODE_NAME",
+            payload: payload.node
+          });
+          for (let i = 0; i < payload.processes.length; i++) {
+            addNewProcess(payload.processes[i]);
+          }
+          break;
+        case "msg_received":
+          dispatch({
+            type: "ADD_MESSAGE_RECEIVED",
+            payload: {
+              at: payload.at.join("."),
+              datetime: payload.datetime,
+              message: payload.msg
+            }
+          });
+          break;
+        case "msg_sent":
+          dispatch({
+            type: "ADD_MESSAGE_SENT",
+            payload: {
+              from: payload.from.join("."),
+              datetime: payload.datetime,
+              message: payload.msg
+            }
+          });
+          break;
       }
     } catch(e) {
       console.log('err', e);
@@ -118,8 +129,9 @@ function App() {
     <div className="App">
       <MainBar name={state.name} />
       <div className="App__content">
-        <Network handleSelect={handleSelect} />
+        <Network />
         <NodeDetails />
+        <Messages />
       </div>
     </div>
   );
