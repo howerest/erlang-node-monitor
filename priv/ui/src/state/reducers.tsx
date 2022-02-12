@@ -1,9 +1,10 @@
 import {DataSet as VisDataSet} from "vis-data";
-import initialState, { IAppState, INode } from './initial_state';
+import initialState, { IAppState, INode, IMessageSent, IMessageReceived } from './initial_state';
 import {
   SET_ERLANG_NODE_NAME,
   SET_NODE_CONTENT,
-  ADD_MESSAGE
+  ADD_MESSAGE_SENT,
+  ADD_MESSAGE_RECEIVED
 } from './actions';
 
 interface IAction<T> {
@@ -21,8 +22,10 @@ export function appReducer(state:IAppState = initialState, action:any) {
       return setErlangNodeNameReducer(state, action);
     case SET_NODE_CONTENT:
       return setNodeContent(state, action);
-    case ADD_MESSAGE:
-      return addMessage(state, action);
+    case ADD_MESSAGE_SENT:
+      return addMessageSent(state, action);
+    case ADD_MESSAGE_RECEIVED:
+      return addMessageReceived(state, action);
   }
   return state;
 };
@@ -37,32 +40,46 @@ function setNodeContent(state:IAppState, action:IAction<string>): IAppState {
   return {...state, ...{nodeContent: action.payload}};
 };
 
-// ADD_MESSAGE
-function addMessage(state:IAppState, action:IAction<INewMessage>): IAppState {
-  const process:INode = state.nodes.get(action.payload.sourceProcessId) as INode;
-  const newMessages = {...process.messages};
-  if (!newMessages[action.payload.sourceProcessId]) {
-    newMessages[action.payload.sourceProcessId] = {};
+// ADD_MESSAGE_SENT
+function addMessageSent(state:IAppState, action:IAction<IMessageSent>): IAppState {
+  const newMessages = {...state.messagesSent};
+  if (!newMessages[action.payload.from]) {
+    newMessages [action.payload.from] = {};
   }
-  if (!newMessages[action.payload.sourceProcessId][action.payload.datetime]) {
-    newMessages[action.payload.sourceProcessId][action.payload.datetime] = [];
+  if (!newMessages[action.payload.from][action.payload.datetime]) {
+    newMessages
+      [action.payload.from]
+      [action.payload.datetime] = [];
   }
-  newMessages[action.payload.sourceProcessId][action.payload.datetime].push({
-    fromProcessId: action.payload.sourceProcessId,
-    content: action.payload.message
-  });
-  state.nodes.updateOnly({
-    ...process,
-    id: action.payload.sourceProcessId,
-    messages: newMessages
-  } as INode);
+  newMessages[action.payload.from][action.payload.datetime].push(
+    action.payload.message
+  );
+
   return {
     ...state,
-    lastMessageAtNode: action.payload.sourceProcessId
+    messagesSent: newMessages,
+    lastMessageAtNode: action.payload.from
   }
 }
-interface INewMessage {
-  sourceProcessId: string;
-  datetime: string;
-  message: string;
+
+// ADD_MESSAGE_RECEIVED
+function addMessageReceived(state:IAppState, action:IAction<IMessageReceived>): IAppState {
+  const newMessages = {...state.messagesReceived};
+  if (!newMessages[action.payload.at]) {
+    newMessages [action.payload.at] = {};
+  }
+  if (!newMessages[action.payload.at][action.payload.datetime]) {
+    newMessages
+      [action.payload.at]
+      [action.payload.datetime] = [];
+  }
+  newMessages[action.payload.at][action.payload.datetime].push(
+    action.payload.message
+  );
+
+  return {
+    ...state,
+    messagesReceived: newMessages,
+    lastMessageAtNode: action.payload.at
+  }
 }

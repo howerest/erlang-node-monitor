@@ -57,8 +57,7 @@ function App() {
           color:       isSupervisor ? "white" : "black",
           background:  isSupervisor ? "red" : "green",
         },
-        links:         node.links.map((l:Array<string>) => l.join('.')),
-        messages:      {}
+        links:         node.links.map((l:Array<string>) => l.join('.'))
       });
 
       // add an edge for each node link
@@ -98,7 +97,7 @@ function App() {
   };
 
   /**
-   * Handles a new received message
+   * Handles a new received message from erlang node websocket server
    */
   function handleOnMessage(evt:any) {
     try {
@@ -115,9 +114,19 @@ function App() {
           break;
         case "msg_received":
           dispatch({
-            type: "ADD_MESSAGE",
+            type: "ADD_MESSAGE_RECEIVED",
             payload: {
-              sourceProcessId: payload.from.join("."),
+              at: payload.at.join("."),
+              datetime: payload.datetime,
+              message: payload.msg
+            }
+          });
+          break;
+        case "msg_sent":
+          dispatch({
+            type: "ADD_MESSAGE_SENT",
+            payload: {
+              from: payload.from.join("."),
               datetime: payload.datetime,
               message: payload.msg
             }
