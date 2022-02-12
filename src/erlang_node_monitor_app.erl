@@ -5,9 +5,10 @@
 -export([stop/1]).
 
 start(_Type, _Args) ->
+  {MyTracerPid, TestProcessPid} = enm_messages_tracer:start(),
   Dispatch = cowboy_router:compile([
     {'_', [
-			{"/", ws_handler, []}
+			{"/", enm_ws_handler, {MyTracerPid, TestProcessPid}}
 		]}
   ]),
   {ok, _} = cowboy:start_clear(my_http_listener,

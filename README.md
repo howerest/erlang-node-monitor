@@ -6,10 +6,8 @@ Visualize registered processes in an erlang node. This program takes a snapshot 
 
 ### Start now
 
-1. Build Backend: `make` (from root folder)
-2. Start Backend: `make run` (from root folder)
-3. Build UI: `cd priv/ui; npm install; npm run build` (from root folder)
-3. Once server is running, open file `priv/ui/build/index.html` with a browser
+1. Build and Start: `make run` (from root folder)
+2. Once server is running, open file `priv/ui/build/index.html` with a browser.
 
 ### Add to your application
 
@@ -24,21 +22,22 @@ Visualize registered processes in an erlang node. This program takes a snapshot 
 [x] Display process names below each node
 [x] Display process pid when hovering a processing for 400 ms
 [x] Display linked processes
+[x] Be able to trace messages within the erlang node over time (as json events towards clients)
 ```
 #### Next features
 ```
-[ ] Filter by list of process names or process ids
 [ ] Register new spawned processes in real time
 [ ] Remove destroyed processes in real time
-[ ] Draw dotted line between processes that have communicated
-[ ] Render ports and with different icon
-[ ] Render port node details
+[ ] Filter traced messages by processes filters
+[ ] Filter displayed processes by processes filters
 ```
 ##### Next features
 ```
+[ ] Render ports and with different icon
+[ ] Render port node details
+[ ] Draw dotted line between processes that have communicated
 [ ] Make dotted line disappear in time after last exchanged message
 [ ] Render animation on failed process
-[ ] Be able to trace messages within the erlang node over time (as json)
 ```
 ##### Authors
 

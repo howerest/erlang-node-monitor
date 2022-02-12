@@ -18,7 +18,7 @@ ERLANG_MK_FILENAME := $(realpath $(lastword $(MAKEFILE_LIST)))
 export ERLANG_MK_FILENAME
 
 ERLANG_MK_VERSION = d80984c
-ERLANG_MK_WITHOUT = 
+ERLANG_MK_WITHOUT =
 
 # Make 3.81 and 3.82 are deprecated.
 
@@ -5789,7 +5789,7 @@ endef
 # separately during the actual bootstrap.
 define bs_Makefile
 PROJECT = $p
-PROJECT_DESCRIPTION = New project
+PROJECT_DESCRIPTION = erlang node monitor
 PROJECT_VERSION = 0.1.0
 $(if $(SP),
 # Whitespace to be used when creating files from templates.
@@ -5799,7 +5799,7 @@ endef
 
 define bs_apps_Makefile
 PROJECT = $p
-PROJECT_DESCRIPTION = New project
+PROJECT_DESCRIPTION = erlang node monitor
 PROJECT_VERSION = 0.1.0
 $(if $(SP),
 # Whitespace to be used when creating files from templates.
