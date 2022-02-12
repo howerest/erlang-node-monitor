@@ -22,21 +22,22 @@ Visualize registered processes in an erlang node. This program takes a snapshot 
 [x] Display process names below each node
 [x] Display process pid when hovering a processing for 400 ms
 [x] Display linked processes
+[x] Be able to trace messages within the erlang node over time (as json events towards clients)
 ```
 #### Next features
 ```
-[ ] Filter by list of process names or process ids
 [ ] Register new spawned processes in real time
 [ ] Remove destroyed processes in real time
-[ ] Draw dotted line between processes that have communicated
-[ ] Render ports and with different icon
-[ ] Render port node details
+[ ] Filter traced messages by processes filters
+[ ] Filter displayed processes by processes filters
 ```
 ##### Next features
 ```
+[ ] Render ports and with different icon
+[ ] Render port node details
+[ ] Draw dotted line between processes that have communicated
 [ ] Make dotted line disappear in time after last exchanged message
 [ ] Render animation on failed process
-[ ] Be able to trace messages within the erlang node over time (as json)
 ```
 ##### Authors
 
