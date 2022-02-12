@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {MainBar, Network, NodeDetails} from "./components"
+import {MainBar, Network, NodeDetails, Messages} from "./components"
 import {DataSet as VisDataSet} from "vis-data";
 import {IEdge} from "./state/initial_state";
 import './App.css';
@@ -131,6 +131,7 @@ function App() {
       <div className="App__content">
         <Network />
         <NodeDetails />
+        <Messages />
       </div>
     </div>
   );
