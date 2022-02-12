@@ -84,19 +84,6 @@ function App() {
   }
 
   /**
-   * Handles a node selection
-   */
-  function handleSelect(params:any) {
-    if (params.nodes.length > 0) {
-      const nodeData = state.nodes.get(params.nodes[0]);
-      dispatch({
-        type: "SET_NODE_CONTENT",
-        payload: JSON.stringify(nodeData, undefined, 3)
-      });
-    }
-  };
-
-  /**
    * Handles a new received message from erlang node websocket server
    */
   function handleOnMessage(evt:any) {
@@ -142,7 +129,7 @@ function App() {
     <div className="App">
       <MainBar name={state.name} />
       <div className="App__content">
-        <Network handleSelect={handleSelect} />
+        <Network />
         <NodeDetails />
       </div>
     </div>
