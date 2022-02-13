@@ -2,7 +2,7 @@
 
 Visualize registered processes in an erlang node. This program takes a snapshot of the registered processes and its links and visualizes them as a network of nodes.
 
-![UI Preview](https://github.com/howerest/erlang-node-monitor/raw/master/docs/screenshot.png)
+![UI Preview](https://github.com/howerest/erlang-node-monitor/raw/master/docs/erlang-node-monitor__screenshot.png)
 
 ### Start now
 

@@ -4,11 +4,16 @@ import {
   TransitionGroup,
 } from 'react-transition-group';
 import "./index.css";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { IAppState, IMessageSent, IMessageReceived } from '../../state/initial_state';
 
 export default function(props:{}) {
   const state = useSelector((state:IAppState) => state);
+  const dispatch = useDispatch();
+
+  function handleToggle(params:any) {
+    dispatch({ type: "TOGGLE_MESSAGES" });
+  }
 
   function getFilteredMessagesSent() {
     // TODO: filter messages on state.filters.messages
@@ -46,13 +51,15 @@ export default function(props:{}) {
 
 
   return (
-    <div className="Messages">
-      <div className="Messages__toggle">
-        Hide
+    <div className={`Messages ${state.config.filters ? 'Messages--shown' : 'Messages-hidden'}`}>
+      <div className="Messages__toggle" onClick={handleToggle}>
+        {state.config.filters ? 'Collapse' : 'Expand'}
       </div>
       <ul>
         <li className="Messages__group">
-          <div className="Messages__group__name">Sent</div>
+          <div className="Messages__group__name">
+            {state.messagesSentCount} Messages Sent
+          </div>
           <ul>
             <TransitionGroup className="Messages__group__messages-sent">
               {getFilteredMessagesSent().map((message, i) => (
@@ -63,7 +70,7 @@ export default function(props:{}) {
                 >
                   <li className="Messages__message">
                     <div className="Messages__message__description">
-                      sent from <span>{message.from}</span> at <span>{message.datetime}</span>:
+                      sent from <span>{message.from}</span> <span className="Messages__message__description__date">{message.datetime}</span>
                     </div>
                     <pre>
                       {message.message}
@@ -75,7 +82,9 @@ export default function(props:{}) {
           </ul>
         </li>
         <li className="Messages__group">
-          <div className="Messages__group__name">Received</div>
+          <div className="Messages__group__name">
+            {state.messagesReceivedCount} Messages Received
+          </div>
           <ul>
             <TransitionGroup className="Messages__group__messages-received">
               {getFilteredMessagesReceived().map((message, i) => (
@@ -86,7 +95,7 @@ export default function(props:{}) {
                 >
                   <li className="Messages__message" key={i}>
                     <div className="Messages__message__description">
-                      received at <span>{message.at}</span> at <span>{message.datetime}</span>:
+                      received at <span>{message.at}</span> <span className="Messages__message__description__date">{message.datetime}</span>
                     </div>
                     <pre>
                       {message.message}

@@ -51,6 +51,11 @@ interface IMessageFilters {
 
 export interface IAppState {
   name: string;
+  config: {
+    filters: boolean;
+    messages: boolean;
+    selectedNodeInfo: boolean;
+  },
   nodes: VisDataSet<INode>;
   edges: VisDataSet<IEdge>;
   filters: {
@@ -58,13 +63,20 @@ export interface IAppState {
     messages: IMessageFilters
   },
   messagesSent: IMessagesHistory;
+  messagesSentCount: number;
   messagesReceived: IMessagesHistory;
+  messagesReceivedCount: number;
   nodeContent: string;
   lastMessageAtNode: null|string;
 }
 
 const initialState:IAppState = {
   name: 'NOT_CONNECTED!',
+  config: {
+    filters: localStorage.getItem("enm_config") === '1' ? true : false,
+    messages: false,
+    selectedNodeInfo: true
+  },
   nodes: new VisDataSet(),
   edges: new VisDataSet(),
   filters: {
@@ -75,7 +87,9 @@ const initialState:IAppState = {
     }
   },
   messagesSent: {},
+  messagesSentCount: 0,
   messagesReceived: {},
+  messagesReceivedCount: 0,
   nodeContent: '',
   lastMessageAtNode: null
 };

@@ -1,6 +1,7 @@
 import initialState, { IAppState, IMessageSent, IMessageReceived } from './initial_state';
 import {
   SET_ERLANG_NODE_NAME,
+  TOGGLE_MESSAGES,
   SET_NODE_CONTENT,
   ADD_MESSAGE_SENT,
   ADD_MESSAGE_RECEIVED
@@ -19,6 +20,8 @@ export function appReducer(state:IAppState = initialState, action:any) {
   switch(action.type) {
     case SET_ERLANG_NODE_NAME:
       return setErlangNodeNameReducer(state, action);
+    case TOGGLE_MESSAGES:
+      return setToggleMessagesReducer(state, action);
     case SET_NODE_CONTENT:
       return setNodeContent(state, action);
     case ADD_MESSAGE_SENT:
@@ -32,6 +35,19 @@ export function appReducer(state:IAppState = initialState, action:any) {
 // SET_ERLANG_NODE_NAME
 function setErlangNodeNameReducer(state:IAppState, action:IAction<string>): IAppState {
   return {...state, ...{name: action.payload}};
+};
+
+// TOGGLE_MESSAGES
+function setToggleMessagesReducer(state:IAppState, action:IAction<string>): IAppState {
+  const newValue = !state.config.filters;
+  localStorage.setItem("enm_config", newValue ? '1' : '0');
+  return {
+    ...state,
+    ...{ config: {
+      ...state.config,
+      filters: newValue
+    }}
+  };
 };
 
 // SET_NODE_CONTENT
@@ -57,6 +73,7 @@ function addMessageSent(state:IAppState, action:IAction<IMessageSent>): IAppStat
   return {
     ...state,
     messagesSent: newMessages,
+    messagesSentCount: state.messagesSentCount+1,
     lastMessageAtNode: action.payload.from
   }
 }
@@ -79,6 +96,7 @@ function addMessageReceived(state:IAppState, action:IAction<IMessageReceived>): 
   return {
     ...state,
     messagesReceived: newMessages,
+    messagesReceivedCount: state.messagesReceivedCount+1,
     lastMessageAtNode: action.payload.at
   }
 }
