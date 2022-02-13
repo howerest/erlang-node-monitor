@@ -10,7 +10,7 @@ pid_tokens(Pid) ->
 
 date_as_string() ->
   {{Year, Month, Day}, {Hour, Minute, Second}} = calendar:now_to_datetime(erlang:timestamp()),
-  Date = lists:flatten(io_lib:format("~p-~p-~p ~p:~p:~p", [Year,Month,Day,Hour,Minute,Second])),
+  Date = lists:flatten(io_lib:format("~4..0w-~2..0w-~2..0w ~2..0w:~2..0w:~2..0w", [Year,Month,Day,Hour,Minute,Second])),
   list_to_binary(Date).
 
 msg_to_string(Msg) ->
