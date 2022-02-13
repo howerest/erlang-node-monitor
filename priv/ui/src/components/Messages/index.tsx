@@ -1,4 +1,8 @@
 import React from "react";
+import {
+  CSSTransition,
+  TransitionGroup,
+} from 'react-transition-group';
 import "./index.css";
 import { useSelector } from 'react-redux';
 import { IAppState, IMessageSent, IMessageReceived } from '../../state/initial_state';
@@ -43,35 +47,54 @@ export default function(props:{}) {
 
   return (
     <div className="Messages">
+      <div className="Messages__toggle">
+        Hide
+      </div>
       <ul>
         <li className="Messages__group">
           <div className="Messages__group__name">Sent</div>
           <ul>
-            {getFilteredMessagesSent().map((message, i) => (
-              <li className="Messages__message" key={i}>
-                <div className="Messages__message__description">
-                  sent from <span>{message.from}</span> at <span>{message.datetime}</span>:
-                </div>
-                <pre>
-                  {message.message}
-                </pre>
-              </li>
-            ))}
+            <TransitionGroup className="Messages__group__messages-sent">
+              {getFilteredMessagesSent().map((message, i) => (
+                <CSSTransition
+                  key={i}
+                  timeout={3000}
+                  classNames="Messages__group__messages-sent__message"
+                >
+                  <li className="Messages__message">
+                    <div className="Messages__message__description">
+                      sent from <span>{message.from}</span> at <span>{message.datetime}</span>:
+                    </div>
+                    <pre>
+                      {message.message}
+                    </pre>
+                  </li>
+                </CSSTransition>
+              ))}
+            </TransitionGroup>
           </ul>
         </li>
         <li className="Messages__group">
           <div className="Messages__group__name">Received</div>
           <ul>
-            {getFilteredMessagesReceived().map((message, i) => (
-              <li className="Messages__message" key={i}>
-                <div className="Messages__message__description">
-                  received at <span>{message.at}</span> at <span>{message.datetime}</span>:
-                </div>
-                <pre>
-                  {message.message}
-                </pre>
-              </li>
-            ))}
+            <TransitionGroup className="Messages__group__messages-received">
+              {getFilteredMessagesReceived().map((message, i) => (
+                <CSSTransition
+                  key={i}
+                  timeout={3000}
+                  classNames="Messages__group__messages-received__message"
+                >
+                  <li className="Messages__message" key={i}>
+                    <div className="Messages__message__description">
+                      received at <span>{message.at}</span> at <span>{message.datetime}</span>:
+                    </div>
+                    <pre>
+                      {message.message}
+                    </pre>
+                  </li>
+                </CSSTransition>
+              ))}
+            </TransitionGroup>
           </ul>
         </li>
       </ul>
