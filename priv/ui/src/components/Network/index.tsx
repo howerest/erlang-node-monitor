@@ -7,8 +7,8 @@ import { IAppState } from '../../state/initial_state';
 
 export default function(props:{}) {
   const state = useSelector((state:IAppState) => state);
-  const domNode = useRef(null);
-  const network = useRef(null);
+  const domNode = useRef(null as null|VisNetwork);
+  const network = useRef(null as null|VisNetwork);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -24,8 +24,16 @@ export default function(props:{}) {
           edges: state.edges
         },
         opts as any
-      ) as any;
-
+      );
+      (network.current as any).once('stabilized', () => {
+        (network.current as any).moveTo({
+          scale: 0.4,
+          animation: {
+            duration: 300,
+            easingFunction: "easeInOutQuad"
+          }
+        });
+      });
       (network.current as any).on("click", handleSelect);
     }
 
@@ -52,7 +60,7 @@ export default function(props:{}) {
 
   return (
     <div className="Network">
-      <div ref={domNode}></div>
+      <div ref={domNode as any}></div>
     </div>
   );
 }

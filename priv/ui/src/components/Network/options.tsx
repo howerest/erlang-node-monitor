@@ -16,9 +16,6 @@ const opts = {
   },
   edges: {
     width: 5,
-    smooth: {
-      type: "continuous",
-    },
     color: "#333333"
   },
   interaction: {
