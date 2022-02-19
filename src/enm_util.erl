@@ -1,12 +1,20 @@
 -module(enm_util).
 
--export([pid_tokens/1, date_as_string/0, msg_to_string/1]).
+-export([
+  pid_tokens/1,
+  pid_to_string/1,
+  date_as_string/0,
+  msg_to_string/1
+]).
 
 pid_tokens(Pid) ->
   PidStr = pid_to_list(Pid),
   PidStr1 = lists:sublist(PidStr, 2, length(PidStr)-2),
   [N, P1, P2] = [list_to_integer(T) || T <- string:tokens(PidStr1,[$.])],
   {N, P1, P2}.
+
+pid_to_string(Pid) ->
+  list_to_binary(lists:flatten(io_lib:format("~p", [Pid]))).
 
 date_as_string() ->
   {{Year, Month, Day}, {Hour, Minute, Second}} = calendar:now_to_datetime(erlang:timestamp()),

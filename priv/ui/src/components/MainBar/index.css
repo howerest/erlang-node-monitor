@@ -7,4 +7,14 @@
   border-bottom: 1px solid lightgray;
   padding: 12px;
   height: 40px;
+  display: flex;
+}
+
+.MainBar__filters {
+  margin-left: 50px;
+  width: 50%;
+}
+
+.MainBar__filters input {
+  width: 100%;
 }
