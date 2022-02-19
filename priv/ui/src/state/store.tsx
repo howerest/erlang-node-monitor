@@ -1,5 +1,6 @@
 import {createStore} from 'redux';
 import {appReducer} from './reducers';
+import initialState, { IAppState } from './initial_state';
 
 const store = createStore(
   appReducer,

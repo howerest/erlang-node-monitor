@@ -1,5 +1,7 @@
 ## erlang node monitor
 
+:warning: Work in progress...
+
 Visualize registered processes in an erlang node. This program takes a snapshot of the registered processes and its links and visualizes them as a network of nodes.
 
 ![UI Preview](https://github.com/howerest/erlang-node-monitor/raw/master/docs/erlang-node-monitor__screenshot.png)
@@ -23,13 +25,16 @@ Visualize registered processes in an erlang node. This program takes a snapshot 
 [x] Display process pid when hovering a processing for 400 ms
 [x] Display linked processes
 [x] Be able to trace messages within the erlang node over time (as json events towards clients)
+[ ] Filter traced messages by processes filters
+[ ] Filter displayed processes by processes filters
+[x] Render connection status
+
 ```
 #### Next features
 ```
 [ ] Register new spawned processes in real time
 [ ] Remove destroyed processes in real time
-[ ] Filter traced messages by processes filters
-[ ] Filter displayed processes by processes filters
+
 ```
 ##### Next features
 ```

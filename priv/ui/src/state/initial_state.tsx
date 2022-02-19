@@ -29,8 +29,16 @@ export interface IMessagesHistory {
 //   }
 // }
 
+export interface IFilteredProcesses {
+  [key: string]: {
+    messagesSent: boolean;
+    messagesReceived: boolean;
+  }
+}
+
 export interface INode {
   id: string;
+  parent: string;
   label: string;
   title: string;
   shape: "hexagon"|"dot";
@@ -45,11 +53,12 @@ export interface IEdge {
 }
 
 interface IMessageFilters {
-  sentFromAnyOfProcessIds: null|Array<string>;
-  receivedAtAnyOfProcessIds: null|Array<string>;
+  sentFromAnyOfProcessIds: Array<string>;
+  receivedAtAnyOfProcessIds: Array<string>;
 }
 
 export interface IAppState {
+  connected: boolean;
   name: string;
   config: {
     filters: boolean;
@@ -59,8 +68,8 @@ export interface IAppState {
   nodes: VisDataSet<INode>;
   edges: VisDataSet<IEdge>;
   filters: {
-    processes: {},
-    messages: IMessageFilters
+    processes: IFilteredProcesses;
+    messages: IMessageFilters;
   },
   messagesSent: IMessagesHistory;
   messagesSentCount: number;
@@ -70,7 +79,10 @@ export interface IAppState {
   lastMessageAtNode: null|string;
 }
 
+const existentFiltersMessages = localStorage.getItem('enm_f_messages');
+
 const initialState:IAppState = {
+  connected: false,
   name: 'NOT_CONNECTED!',
   config: {
     filters: localStorage.getItem("enm_config") === '1' ? true : false,
@@ -81,9 +93,9 @@ const initialState:IAppState = {
   edges: new VisDataSet(),
   filters: {
     processes: {},
-    messages: {
-      sentFromAnyOfProcessIds: null,
-      receivedAtAnyOfProcessIds: null
+    messages: existentFiltersMessages ? JSON.parse(existentFiltersMessages) : {
+      sentFromAnyOfProcessIds: [],
+      receivedAtAnyOfProcessIds: []
     }
   },
   messagesSent: {},
